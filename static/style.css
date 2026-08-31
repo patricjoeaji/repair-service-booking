@@ -15,35 +15,35 @@ body {
     min-height: 100vh;
     margin: auto;
     padding: 55px 32px;
-    background: #f7f9fc;
 }
 
 .brand {
+    margin-bottom: 55px;
     font-size: 12px;
     font-weight: 700;
     color: #2563eb;
-    margin-bottom: 55px;
 }
 
 h1 {
-    font-size: 28px;
     margin: 0 0 10px;
+    font-size: 28px;
 }
 
 .subtitle {
+    margin-bottom: 42px;
     font-size: 12px;
     color: #64748b;
-    margin-bottom: 42px;
 }
 
 label {
     display: block;
+    margin-bottom: 10px;
     font-size: 11px;
     font-weight: 600;
-    margin-bottom: 10px;
 }
 
-input {
+input,
+select {
     width: 100%;
     height: 52px;
     margin-bottom: 28px;
@@ -54,21 +54,43 @@ input {
     font-size: 12px;
 }
 
-input:focus {
+input:focus,
+select:focus {
     outline: none;
     border-color: #2563eb;
 }
 
-button {
+button,
+.home-button,
+.secondary-button {
     width: 100%;
     height: 52px;
-    border: none;
     border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+button,
+.home-button {
     background: #2563eb;
     color: white;
-    font-size: 14px;
-    font-weight: 700;
+    border: none;
+}
+
+button {
     cursor: pointer;
+}
+
+.home-button,
+.secondary-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-button {
+    margin-bottom: 16px;
 }
 
 .secondary-button {
@@ -87,33 +109,9 @@ button {
     text-decoration: none;
 }
 
-.back-link:hover {
+.back-link:hover,
+.home-button:hover {
     color: #2563eb;
-}
-
-.secondary-button {
-    margin-top: 16px;
-    background: white;
-    color: #172033;
-    border: 1px solid #cbd5e1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
-.home-button {
-    width: 100%;
-    height: 52px;
-    margin-bottom: 16px;
-    border-radius: 8px;
-    background: #2563eb;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 700;
 }
 
 .home-button:hover {
@@ -121,21 +119,21 @@ button {
 }
 
 .error-message {
-    background: #fee2e2;
-    color: #b91c1c;
+    margin-bottom: 16px;
+    padding: 10px;
     border: 1px solid #fca5a5;
     border-radius: 6px;
-    padding: 10px;
-    margin-bottom: 16px;
+    background: #fee2e2;
+    color: #b91c1c;
     font-size: 13px;
     text-align: center;
 }
+
 .booking-card {
-    text-align: left;
+    margin-bottom: 16px;
+    padding: 16px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
     background: white;
 }
 
@@ -145,19 +143,11 @@ button {
 }
 
 .booking-card p {
-    font-size: 14px;
     margin: 8px 0;
+    font-size: 14px;
 }
 
 .empty-state {
-    text-align: center;
     padding: 20px 0;
-}
-
-.empty-state h2 {
-    margin-bottom: 8px;
-}
-
-.empty-state p {
-    margin-bottom: 20px;
+    text-align: center;
 }
