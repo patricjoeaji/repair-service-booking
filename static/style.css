@@ -101,3 +101,21 @@ button {
     justify-content: center;
     text-decoration: none;
 }
+.home-button {
+    width: 100%;
+    height: 52px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    background: #2563eb;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.home-button:hover {
+    opacity: 0.9;
+}
