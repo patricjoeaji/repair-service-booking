@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Customer Bookings - Repair Service Booking</title>
+    <title>Manage Customer Bookings - Repair Service Booking</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -13,14 +12,12 @@
 
     <div class="login-container">
 
-        <div class="brand">
-            REPAIR SERVICE BOOKING
-        </div>
+        <div class="brand">REPAIR SERVICE BOOKING</div>
 
         <h1>Customer Bookings</h1>
 
         <p class="subtitle">
-            View customer repair bookings
+            View and update customer repair bookings
         </p>
 
         {% if bookings %}
@@ -62,9 +59,55 @@
                     </p>
 
                     <p>
-                        <strong>Status:</strong>
+                        <strong>Current Status:</strong>
                         {{ booking["status"] }}
                     </p>
+
+                    <form
+                        method="POST"
+                        action="{{ url_for('update_booking_status', booking_id=booking['id']) }}"
+                    >
+
+                        <label for="status-{{ booking['id'] }}">
+                            Update Status
+                        </label>
+
+                        <select
+                            id="status-{{ booking['id'] }}"
+                            name="status"
+                            required
+                        >
+                            <option value="Pending"
+                                {% if booking["status"] == "Pending" %}selected{% endif %}>
+                                Pending
+                            </option>
+
+                            <option value="Confirmed"
+                                {% if booking["status"] == "Confirmed" %}selected{% endif %}>
+                                Confirmed
+                            </option>
+
+                            <option value="In Progress"
+                                {% if booking["status"] == "In Progress" %}selected{% endif %}>
+                                In Progress
+                            </option>
+
+                            <option value="Completed"
+                                {% if booking["status"] == "Completed" %}selected{% endif %}>
+                                Completed
+                            </option>
+
+                            <option value="Cancelled"
+                                {% if booking["status"] == "Cancelled" %}selected{% endif %}>
+                                Cancelled
+                            </option>
+                        </select>
+
+                        <button type="submit">
+                            UPDATE STATUS
+                        </button>
+
+                    </form>
 
                 </div>
 
@@ -73,12 +116,12 @@
         {% else %}
 
             <p class="subtitle">
-                No customer bookings have been submitted yet.
+                No customer bookings have been created yet.
             </p>
 
         {% endif %}
 
-        <a href="{{ url_for('staff_dashboard') }}" class="secondary-button">
+        <a href="{{ url_for('staff_dashboard') }}" class="back-link">
             BACK TO STAFF DASHBOARD
         </a>
 

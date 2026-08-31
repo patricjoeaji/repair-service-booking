@@ -300,7 +300,40 @@ def staff_bookings():
         bookings=bookings
     )
 
+@app.route("/update-booking-status/<int:booking_id>", methods=["POST"])
+def update_booking_status(booking_id):
 
+    if "staff_id" not in session:
+        return redirect(url_for("staff_login"))
+
+    status = request.form["status"]
+
+    allowed_statuses = [
+        "Pending",
+        "Confirmed",
+        "In Progress",
+        "Completed",
+        "Cancelled"
+    ]
+
+    if status not in allowed_statuses:
+        return redirect(url_for("staff_bookings"))
+
+    connection = get_db_connection()
+
+    connection.execute(
+        """
+        UPDATE bookings
+        SET status = ?
+        WHERE id = ?
+        """,
+        (status, booking_id)
+    )
+
+    connection.commit()
+    connection.close()
+
+    return redirect(url_for("staff_bookings"))
  
 # LOGOUT
  
