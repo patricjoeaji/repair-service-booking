@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
+import os
 
 from db import get_db_connection, create_database
 
 app = Flask(__name__)
-app.secret_key = "repair-service-booking-secret-key"
+app.secret_key = os.environ.get("SECRET_KEY")
 
 
 @app.route("/first-login")
