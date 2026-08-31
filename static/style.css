@@ -119,3 +119,14 @@ button {
 .home-button:hover {
     opacity: 0.9;
 }
+
+.error-message {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    text-align: center;
+}

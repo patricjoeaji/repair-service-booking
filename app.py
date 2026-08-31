@@ -33,7 +33,10 @@ def login():
                 customer_name=customer["name"]
             )
 
-        return "Invalid email or password"
+        return render_template(
+            "login.html",
+            error="Invalid email or password"
+        )
 
     return render_template("login.html")
 
@@ -49,7 +52,10 @@ def register():
         confirm_password = request.form["confirm_password"]
 
         if password != confirm_password:
-            return "Passwords do not match"
+            return render_template(
+                "register.html",
+                error="Passwords do not match"
+            )
 
         hashed_password = generate_password_hash(password)
 
@@ -68,7 +74,10 @@ def register():
 
         except sqlite3.IntegrityError:
             connection.close()
-            return "An account with this email already exists"
+            return render_template(
+                "register.html",
+                error="An account with this email already exists"
+            )
 
         connection.close()
 
