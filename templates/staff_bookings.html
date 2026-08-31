@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Bookings - Repair Service Booking</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="brand">
+            REPAIR SERVICE BOOKING
+        </div>
+
+        <h1>Customer Bookings</h1>
+
+        <p class="subtitle">
+            View customer repair bookings
+        </p>
+
+        {% if bookings %}
+
+            {% for booking in bookings %}
+
+                <div class="booking-card">
+
+                    <h2>Booking #{{ booking["id"] }}</h2>
+
+                    <p>
+                        <strong>Customer:</strong>
+                        {{ booking["customer_name"] }}
+                    </p>
+
+                    <p>
+                        <strong>Email:</strong>
+                        {{ booking["customer_email"] }}
+                    </p>
+
+                    <p>
+                        <strong>Repair Service:</strong>
+                        {{ booking["service"] }}
+                    </p>
+
+                    <p>
+                        <strong>Description:</strong>
+                        {{ booking["description"] }}
+                    </p>
+
+                    <p>
+                        <strong>Preferred Date:</strong>
+                        {{ booking["preferred_date"] }}
+                    </p>
+
+                    <p>
+                        <strong>Preferred Time:</strong>
+                        {{ booking["preferred_time"] }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ booking["status"] }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p class="subtitle">
+                No customer bookings have been submitted yet.
+            </p>
+
+        {% endif %}
+
+        <a href="{{ url_for('staff_dashboard') }}" class="secondary-button">
+            BACK TO STAFF DASHBOARD
+        </a>
+
+        <a href="{{ url_for('logout') }}" class="back-link">
+            LOGOUT
+        </a>
+
+    </div>
+
+</body>
+</html>

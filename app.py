@@ -8,6 +8,10 @@ app = Flask(__name__)
 app.secret_key = "repair-service-booking-secret-key"
 
 
+ 
+# CUSTOMER LOGIN
+ 
+
 @app.route("/", methods=["GET", "POST"])
 def login():
 
@@ -41,6 +45,10 @@ def login():
 
     return render_template("login.html")
 
+
+ 
+# CUSTOMER REGISTRATION
+ 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -88,6 +96,9 @@ def register():
     return render_template("register.html")
 
 
+ 
+# CUSTOMER HOME  
+
 @app.route("/customer-home")
 def customer_home():
 
@@ -100,6 +111,9 @@ def customer_home():
     )
 
 
+ 
+# CREATE REPAIR BOOKING
+ 
 @app.route("/create-booking", methods=["GET", "POST"])
 def create_booking():
 
@@ -124,7 +138,13 @@ def create_booking():
         connection.execute(
             """
             INSERT INTO bookings
-            (customer_id, service, description, preferred_date, preferred_time)
+            (
+                customer_id,
+                service,
+                description,
+                preferred_date,
+                preferred_time
+            )
             VALUES (?, ?, ?, ?, ?)
             """,
             (
@@ -143,6 +163,10 @@ def create_booking():
 
     return render_template("create_booking.html")
 
+
+ 
+# VIEW CUSTOMER BOOKINGS
+ 
 
 @app.route("/view-bookings")
 def view_bookings():
@@ -170,6 +194,10 @@ def view_bookings():
     )
 
 
+ 
+# BOOKING SUCCESS
+ 
+
 @app.route("/booking-success")
 def booking_success():
 
@@ -178,6 +206,10 @@ def booking_success():
 
     return render_template("booking_success.html")
 
+
+ 
+# STAFF LOGIN
+ 
 
 @app.route("/staff-login", methods=["GET", "POST"])
 def staff_login():
@@ -214,6 +246,10 @@ def staff_login():
     return render_template("staff_login.html")
 
 
+ 
+# STAFF DASHBOARD
+ 
+
 @app.route("/staff-dashboard")
 def staff_dashboard():
 
@@ -227,6 +263,48 @@ def staff_dashboard():
     )
 
 
+ 
+# STAFF VIEW CUSTOMER BOOKINGS
+ 
+
+@app.route("/staff-bookings")
+def staff_bookings():
+
+    if "staff_id" not in session:
+        return redirect(url_for("staff_login"))
+
+    connection = get_db_connection()
+
+    bookings = connection.execute(
+        """
+        SELECT
+            bookings.id,
+            customers.name AS customer_name,
+            customers.email AS customer_email,
+            bookings.service,
+            bookings.description,
+            bookings.preferred_date,
+            bookings.preferred_time,
+            bookings.status
+        FROM bookings
+        JOIN customers
+            ON bookings.customer_id = customers.id
+        ORDER BY bookings.id DESC
+        """
+    ).fetchall()
+
+    connection.close()
+
+    return render_template(
+        "staff_bookings.html",
+        bookings=bookings
+    )
+
+
+ 
+# LOGOUT
+ 
+
 @app.route("/logout")
 def logout():
 
@@ -234,6 +312,10 @@ def logout():
 
     return redirect(url_for("login"))
 
+
+ 
+# RUN APPLICATION
+ 
 
 if __name__ == "__main__":
     create_database()
