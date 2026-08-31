@@ -1,5 +1,8 @@
 import sqlite3
 
+from werkzeug.security import generate_password_hash
+
+
 DATABASE = "database.db"
 
 
@@ -33,6 +36,35 @@ def create_database():
             FOREIGN KEY (customer_id) REFERENCES customers (id)
         )
     """)
+
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS staff (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            role TEXT NOT NULL DEFAULT 'Staff'
+        )
+    """)
+
+    existing_staff = connection.execute(
+        "SELECT id FROM staff WHERE email = ?",
+        ("staff@repairservice.com",)
+    ).fetchone()
+
+    if existing_staff is None:
+        connection.execute(
+            """
+            INSERT INTO staff (name, email, password, role)
+            VALUES (?, ?, ?, ?)
+            """,
+            (
+                "Repair Service Staff",
+                "staff@repairservice.com",
+                generate_password_hash("Staff123!"),
+                "Staff"
+            )
+        )
 
     connection.commit()
     connection.close()

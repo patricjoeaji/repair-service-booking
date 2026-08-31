@@ -143,6 +143,7 @@ def create_booking():
 
     return render_template("create_booking.html")
 
+
 @app.route("/view-bookings")
 def view_bookings():
 
@@ -167,6 +168,8 @@ def view_bookings():
         "view_bookings.html",
         bookings=bookings
     )
+
+
 @app.route("/booking-success")
 def booking_success():
 
@@ -174,6 +177,54 @@ def booking_success():
         return redirect(url_for("login"))
 
     return render_template("booking_success.html")
+
+
+@app.route("/staff-login", methods=["GET", "POST"])
+def staff_login():
+
+    if request.method == "POST":
+
+        email = request.form["email"]
+        password = request.form["password"]
+
+        connection = get_db_connection()
+
+        staff = connection.execute(
+            "SELECT * FROM staff WHERE email = ?",
+            (email,)
+        ).fetchone()
+
+        connection.close()
+
+        if staff and check_password_hash(
+            staff["password"],
+            password
+        ):
+            session["staff_id"] = staff["id"]
+            session["staff_name"] = staff["name"]
+            session["staff_role"] = staff["role"]
+
+            return redirect(url_for("staff_dashboard"))
+
+        return render_template(
+            "staff_login.html",
+            error="Invalid staff email or password"
+        )
+
+    return render_template("staff_login.html")
+
+
+@app.route("/staff-dashboard")
+def staff_dashboard():
+
+    if "staff_id" not in session:
+        return redirect(url_for("staff_login"))
+
+    return render_template(
+        "staff_dashboard.html",
+        staff_name=session["staff_name"],
+        staff_role=session["staff_role"]
+    )
 
 
 @app.route("/logout")

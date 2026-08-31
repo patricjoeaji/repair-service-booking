@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard - Repair Service Booking</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="brand">REPAIR SERVICE BOOKING</div>
+
+        <h1>Staff Dashboard</h1>
+
+        <p class="subtitle">
+            Welcome, {{ staff_name }}
+        </p>
+
+        <div class="home-button">
+            MANAGE CUSTOMER BOOKINGS
+        </div>
+
+        <div class="home-button">
+            STAFF ROLE: {{ staff_role }}
+        </div>
+
+        <a href="{{ url_for('logout') }}" class="back-link">
+            LOGOUT
+        </a>
+
+    </div>
+
+</body>
+</html>
