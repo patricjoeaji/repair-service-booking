@@ -21,5 +21,18 @@ def create_database():
         )
     """)
 
+    connection.execute("""
+        CREATE TABLE IF NOT EXISTS bookings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            customer_id INTEGER NOT NULL,
+            service TEXT NOT NULL,
+            description TEXT NOT NULL,
+            preferred_date TEXT NOT NULL,
+            preferred_time TEXT NOT NULL,
+            status TEXT NOT NULL DEFAULT 'Pending',
+            FOREIGN KEY (customer_id) REFERENCES customers (id)
+        )
+    """)
+
     connection.commit()
     connection.close()

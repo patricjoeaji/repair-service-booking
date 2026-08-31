@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 
 from db import get_db_connection, create_database
 
 app = Flask(__name__)
+app.secret_key = "repair-service-booking-secret-key"
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -28,10 +29,10 @@ def login():
             customer["password"],
             password
         ):
-            return render_template(
-                "customer_home.html",
-                customer_name=customer["name"]
-            )
+            session["customer_id"] = customer["id"]
+            session["customer_name"] = customer["name"]
+
+            return redirect(url_for("customer_home"))
 
         return render_template(
             "login.html",
@@ -74,6 +75,7 @@ def register():
 
         except sqlite3.IntegrityError:
             connection.close()
+
             return render_template(
                 "register.html",
                 error="An account with this email already exists"
@@ -84,6 +86,102 @@ def register():
         return redirect(url_for("login"))
 
     return render_template("register.html")
+
+
+@app.route("/customer-home")
+def customer_home():
+
+    if "customer_id" not in session:
+        return redirect(url_for("login"))
+
+    return render_template(
+        "customer_home.html",
+        customer_name=session["customer_name"]
+    )
+
+
+@app.route("/create-booking", methods=["GET", "POST"])
+def create_booking():
+
+    if "customer_id" not in session:
+        return redirect(url_for("login"))
+
+    if request.method == "POST":
+
+        service = request.form["service"]
+        description = request.form["description"]
+        preferred_date = request.form["preferred_date"]
+        preferred_time = request.form["preferred_time"]
+
+        if not service or not description or not preferred_date or not preferred_time:
+            return render_template(
+                "create_booking.html",
+                error="Please complete all booking fields"
+            )
+
+        connection = get_db_connection()
+
+        connection.execute(
+            """
+            INSERT INTO bookings
+            (customer_id, service, description, preferred_date, preferred_time)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (
+                session["customer_id"],
+                service,
+                description,
+                preferred_date,
+                preferred_time
+            )
+        )
+
+        connection.commit()
+        connection.close()
+
+        return redirect(url_for("booking_success"))
+
+    return render_template("create_booking.html")
+
+@app.route("/view-bookings")
+def view_bookings():
+
+    if "customer_id" not in session:
+        return redirect(url_for("login"))
+
+    connection = get_db_connection()
+
+    bookings = connection.execute(
+        """
+        SELECT *
+        FROM bookings
+        WHERE customer_id = ?
+        ORDER BY id DESC
+        """,
+        (session["customer_id"],)
+    ).fetchall()
+
+    connection.close()
+
+    return render_template(
+        "view_bookings.html",
+        bookings=bookings
+    )
+@app.route("/booking-success")
+def booking_success():
+
+    if "customer_id" not in session:
+        return redirect(url_for("login"))
+
+    return render_template("booking_success.html")
+
+
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect(url_for("login"))
 
 
 if __name__ == "__main__":

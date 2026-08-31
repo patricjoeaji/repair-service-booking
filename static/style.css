@@ -130,3 +130,34 @@ button {
     font-size: 13px;
     text-align: center;
 }
+.booking-card {
+    text-align: left;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    background: white;
+}
+
+.booking-card h2 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.booking-card p {
+    font-size: 14px;
+    margin: 8px 0;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.empty-state h2 {
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    margin-bottom: 20px;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings - Repair Service Booking</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="brand">REPAIR SERVICE BOOKING</div>
+
+        <h1>My Bookings</h1>
+
+        <p class="subtitle">
+            View and manage your repair bookings
+        </p>
+
+        {% if bookings %}
+
+            {% for booking in bookings %}
+
+                <div class="booking-card">
+
+                    <h2>{{ booking["service"] }}</h2>
+
+                    <p>
+                        <strong>Description:</strong>
+                        {{ booking["description"] }}
+                    </p>
+
+                    <p>
+                        <strong>Date:</strong>
+                        {{ booking["preferred_date"] }}
+                    </p>
+
+                    <p>
+                        <strong>Time:</strong>
+                        {{ booking["preferred_time"] }}
+                    </p>
+
+                    <p>
+                        <strong>Status:</strong>
+                        {{ booking["status"] }}
+                    </p>
+
+                </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty-state">
+
+                <h2>No Bookings Yet</h2>
+
+                <p>
+                    You don't have any repair bookings yet.
+                </p>
+
+                <a href="{{ url_for('create_booking') }}" class="home-button">
+                    CREATE REPAIR BOOKING
+                </a>
+
+            </div>
+
+        {% endif %}
+
+        <a href="{{ url_for('customer_home') }}" class="back-link">
+            BACK TO CUSTOMER HOME
+        </a>
+
+    </div>
+
+</body>
+</html>
