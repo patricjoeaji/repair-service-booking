@@ -8,6 +8,10 @@ app = Flask(__name__)
 app.secret_key = "repair-service-booking-secret-key"
 
 
+@app.route("/first-login")
+def first_login():
+    return render_template("first_login.html")
+
  
 # CUSTOMER LOGIN
  

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>First Login - Repair Service Booking</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-container">
+
+        <div class="brand">
+            REPAIR SERVICE BOOKING
+        </div>
+
+        <h1>Choose Login</h1>
+
+        <div class="welcome-section">
+
+            <h2>Welcome</h2>
+
+            <p class="subtitle">
+                Choose how you want to continue
+            </p>
+
+        </div>
+
+        <a href="{{ url_for('login') }}" class="home-button">
+            Customer Login
+        </a>
+
+        <a href="{{ url_for('staff_login') }}" class="secondary-button">
+            Staff Login
+        </a>
+
+        <p class="footer-text">
+            Repair service booking made simple.
+        </p>
+
+    </div>
+
+</body>
+</html>
