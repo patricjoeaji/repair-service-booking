@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Customer Login - Repair Service Booking</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -12,7 +13,9 @@
 
     <div class="login-container">
 
-        <div class="brand">REPAIR SERVICE BOOKING</div>
+        <div class="brand">
+            REPAIR SERVICE BOOKING
+        </div>
 
         <h1>Customer Login</h1>
 
@@ -27,6 +30,7 @@
         <form method="POST">
 
             <label for="email">Email</label>
+
             <input
                 type="email"
                 id="email"
@@ -36,6 +40,7 @@
             >
 
             <label for="password">Password</label>
+
             <input
                 type="password"
                 id="password"
@@ -44,11 +49,19 @@
                 required
             >
 
-            <button type="submit">LOGIN</button>
+            <button type="submit">
+                LOGIN
+            </button>
 
         </form>
 
-        <a href="/register" class="secondary-button">REGISTER</a>
+        <a href="/register" class="secondary-button">
+            REGISTER
+        </a>
+
+        <a href="{{ url_for('first_login') }}" class="back-link">
+            SWITCH ROLE
+        </a>
 
     </div>
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Create Repair Booking - Repair Service Booking</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -12,7 +13,9 @@
 
     <div class="login-container">
 
-        <div class="brand">REPAIR SERVICE BOOKING</div>
+        <div class="brand">
+            REPAIR SERVICE BOOKING
+        </div>
 
         <h1>Create Repair Booking</h1>
 
@@ -27,24 +30,27 @@
         <form method="POST">
 
             <label for="service">Repair Service</label>
+
             <select id="service" name="service" required>
                 <option value="">Select a repair service</option>
                 <option value="Electrical Repair">Electrical Repair</option>
-                <option value="Water leak Repair">Water leak Repair</option>
-                <option value="Furniture Repair">Furniture Repairr</option>
+                <option value="Water Leak Repair">Water Leak Repair</option>
+                <option value="Furniture Repair">Furniture Repair</option>
                 <option value="Other">Other</option>
             </select>
 
             <label for="description">Repair Description</label>
+
             <textarea
                 id="description"
                 name="description"
-                placeholder="Describe the problem with your device"
+                placeholder="Describe the problem"
                 rows="5"
                 required
             ></textarea>
 
             <label for="preferred_date">Preferred Date</label>
+
             <input
                 type="date"
                 id="preferred_date"
@@ -53,6 +59,7 @@
             >
 
             <label for="preferred_time">Preferred Time</label>
+
             <select id="preferred_time" name="preferred_time" required>
                 <option value="">Select a preferred time</option>
                 <option value="9:00 AM">9:00 AM</option>
@@ -65,7 +72,9 @@
                 <option value="4:00 PM">4:00 PM</option>
             </select>
 
-            <button type="submit">SUBMIT BOOKING</button>
+            <button type="submit">
+                SUBMIT BOOKING
+            </button>
 
         </form>
 
